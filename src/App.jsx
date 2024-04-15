@@ -23,8 +23,15 @@ export default function Board() {
   let status;
   if (winner) {
     status = winner + " a gagné";
+  } else if (!squares.includes(null)) {
+    status = "Match nul";
   } else {
     status = "Prochain tour : " + (xIsNext ? "X" : "O");
+  }
+
+  function resetBoard() {
+    setSquares(Array(9).fill(null));
+    setXIsNext(true);
   }
 
   return (
@@ -45,6 +52,7 @@ export default function Board() {
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
+      <ReplayButton onResetClick={resetBoard} />
     </>
   );
 }
@@ -75,4 +83,8 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+function ReplayButton({ onResetClick }) {
+  return <button onClick={onResetClick}>Rejouer</button>;
 }
